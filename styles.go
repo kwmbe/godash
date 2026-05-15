@@ -3,11 +3,11 @@ package main
 import lg "charm.land/lipgloss/v2"
 
 var (
-  defaultText = lg.NewStyle().Foreground(lg.Color("#fff"))
-  subtleText = lg.NewStyle().Foreground(lg.Color("#585858"))
+  defaultText = lg.NewStyle().Foreground(lg.Color("15"))
+  subtleText = lg.NewStyle().Foreground(lg.Color("8"))
 
   border = lg.NewStyle().
-    BorderForeground(lg.Color("#ccc")).
+    BorderForeground(lg.Color("7")).
     Padding(0, 1)
 
   selectedBorder = border.
