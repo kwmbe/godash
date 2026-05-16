@@ -16,6 +16,7 @@ const (
 )
 
 type model struct {
+  styles     *styles
   width      int
   height     int
 
@@ -40,6 +41,6 @@ func initialModel() model {
 }
 
 func (m model) Init() tea.Cmd {
-  return m.spinner.Tick
+  return tea.Batch(m.spinner.Tick, tea.RequestBackgroundColor)
 }
 

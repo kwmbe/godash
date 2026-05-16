@@ -2,29 +2,50 @@ package main
 
 import lg "charm.land/lipgloss/v2"
 
-var (
-  defaultText = lg.NewStyle().Foreground(lg.Color("15"))
-  subtleText = lg.NewStyle().Foreground(lg.Color("8"))
+type styles struct {
+  text,
+  subtleText,
 
-  border = lg.NewStyle().
-    BorderForeground(lg.Color("7")).
+  border,
+  activeBorder,
+  defaultBorder,
+
+  header,
+  footer,
+
+  spinner lg.Style
+}
+
+func newStyles(isDarkBg bool) (s *styles) {
+  s = new(styles)
+
+  lightDark := lg.LightDark(isDarkBg)
+
+  s.text = lg.NewStyle().Foreground(lightDark(lg.Color("#000"), lg.Color("#fff")))
+  s.subtleText = lg.NewStyle().Foreground(lg.Color("#585858"))
+
+
+  s.border = lg.NewStyle().
+    BorderForeground(lightDark(lg.Color("#333"), lg.Color("#ccc"))).
     Padding(0, 1)
 
-  selectedBorder = border.
+  s.activeBorder = s.border.
     BorderStyle(lg.ThickBorder())
 
-  defaultBorder = border.
+  s.defaultBorder = s.border.
     BorderStyle(lg.NormalBorder())
 
-  headerStyle = defaultText.Bold(true).Align(lg.Center)
-  footerStyle = subtleText.Align(lg.Center)
+  s.header = s.text.Bold(true).Align(lg.Center)
+  s.footer = s.subtleText.Align(lg.Center)
 
-  spinnerStyle = defaultText.Align(lg.Center).AlignVertical(lg.Center)
-)
+  s.spinner = s.text.Align(lg.Center).AlignVertical(lg.Center)
 
-func panelBorder(p panel, active panel) lg.Style {
+  return s
+}
+
+func panelBorder(p panel, active panel, s *styles) lg.Style {
   if p == active {
-    return selectedBorder
+    return s.activeBorder
   }
-  return defaultBorder
+  return s.defaultBorder
 }

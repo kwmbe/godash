@@ -16,6 +16,11 @@ func (m model) cyclePanel(dir int) (tea.Model, tea.Cmd) {
   return m, nil
 }
 
+func (m model) handleStyle(msg tea.BackgroundColorMsg) (tea.Model, tea.Cmd) {
+  m.styles = newStyles(msg.IsDark())
+  return m, nil
+}
+
 func (m model) handleWindowSize(msg tea.WindowSizeMsg) (tea.Model, tea.Cmd) {
   m.width = msg.Width
   m.height = msg.Height
@@ -42,6 +47,8 @@ func (m model) handleKeyPress(msg tea.KeyPressMsg) (tea.Model, tea.Cmd) {
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
   switch msg := msg.(type) {
+  case tea.BackgroundColorMsg:
+    return m.handleStyle(msg)
   case tea.WindowSizeMsg:
     return m.handleWindowSize(msg)
   case tea.KeyPressMsg:
