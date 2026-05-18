@@ -2,6 +2,15 @@ package main
 
 import lg "charm.land/lipgloss/v2"
 
+var (
+	black =     lg.Color("#000")
+	white =     lg.Color("#fff")
+
+	darkgrey =  lg.Color("#333")
+	grey =      lg.Color("#585858")
+	lightgrey = lg.Color("#ccc")
+)
+
 type styles struct {
   text,
   subtleText,
@@ -21,12 +30,12 @@ func newStyles(isDarkBg bool) (s *styles) {
 
   lightDark := lg.LightDark(isDarkBg)
 
-  s.text = lg.NewStyle().Foreground(lightDark(lg.Color("#000"), lg.Color("#fff")))
-  s.subtleText = lg.NewStyle().Foreground(lg.Color("#585858"))
+  s.text = lg.NewStyle().Foreground(lightDark(black, white))
+  s.subtleText = lg.NewStyle().Foreground(grey)
 
 
   s.border = lg.NewStyle().
-    BorderForeground(lightDark(lg.Color("#333"), lg.Color("#ccc"))).
+    BorderForeground(lightDark(darkgrey, lightgrey)).
     Padding(0, 1)
 
   s.activeBorder = s.border.
